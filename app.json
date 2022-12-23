@@ -1,0 +1,56 @@
+{
+  "id": "53bd1b2d-467c-442b-bbdb-ac5144e44b6d",
+  "name": "Reparation",
+  "publisher": "Default publisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "16.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "showMyCode": true,
+  "dependencies": [
+    {
+      "id": "983759ef-c249-4c5a-879b-84576c3197b9",
+      "publisher": "DeltaSoft International",
+      "name": "TransitFolder",
+      "version": "1.0.0.0"
+    },
+    
+    {
+      "id": "183ce75c-6ee0-41c1-81d2-074decaa6c51",
+      "publisher": "DeltaSoft International",
+      "name": "STDELVA",
+      "version": "1.0.0.0"
+    },
+    {
+      "id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "publisher": "Microsoft",
+      "name": "System Application",
+      "version": "16.0.0.0"
+    },
+    {
+      "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "publisher": "Microsoft",
+      "name": "Base Application",
+      "version": "16.0.0.0"
+    }
+
+  ],
+  "runtime": "5.0",
+  "target": "OnPrem",
+  "features": [
+    "NoImplicitWith"
+  ]
+}

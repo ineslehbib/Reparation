@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "publisher": "Deltasoft International",
+    "brief": "",
+    "description": "",
+    "privacyStatement": "",
+    "EULA": "",
+    "help": "",
+    "url": "",
+    "logo": "",
+    "application": "16.0.0.0",
+    "configurations": [
+        {
+            "name": "LOCAL INES",
+            "type": "al",
+            "request": "launch",
+            "environmentType": "OnPrem",
+            "server": "http://localhost:8080/BC160",
+            "serverInstance": "BC160",
+            "authentication": "Windows",
+            "breakOnError": true,
+            "breakOnRecordWrite": false,
+            "enableSqlInformationDebugger": true,
+            "enableLongRunningSqlStatements": true,
+            //"longRunningSqlStatementsThreshold": 500,
+            //"numberOfSqlStatements": 10,
+            "breakOnNext": "WebServiceClient",
+            "tenant": "default",
+            "port": 14049,
+            "startupObjectType": "Page",
+            "schemaUpdateMode": "ForceSync"
+        }
+    ]
+}
