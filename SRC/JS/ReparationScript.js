@@ -49,3 +49,31 @@ const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.na
 //         }
 //     })
 // });
+
+function ChangeFace(id) {
+    let text = id
+    var aff = document.getElementById(text);
+    var voi = document.getElementById('voiture');
+    if (text.indexOf("face") == 0) {
+        document.getElementById('voiture').src = "https://github.com/ineslehbib/Reparation/blob/master/SRC/assets/face.png?raw=true";
+        console.log("ok");
+    }
+    if (text.indexOf("arriere") == 0) {
+        document.getElementById('voiture').src = "https://github.com/ineslehbib/Reparation/blob/master/SRC/assets/arriere.png?raw=true";
+    }
+    if (text.indexOf("arriere") == 0) {
+        document.getElementById('voiture').src = "https://github.com/ineslehbib/Reparation/blob/master/SRC/assets/arriere.png?raw=true";
+    }
+    if (text.indexOf("gauche") == 0) {
+        document.getElementById('voiture').src = "https://github.com/ineslehbib/Reparation/blob/master/SRC/assets/gauche.png?raw=true";
+    }
+    if (text.indexOf("droite") == 0) {
+        document.getElementById('voiture').src = "https://github.com/ineslehbib/Reparation/blob/master/SRC/assets/droite.png?raw=true";
+
+    }
+
+    if (text.indexOf("haut") == 0) {
+        document.getElementById('voiture').src = "https://github.com/ineslehbib/Reparation/blob/master/SRC/assets/haut.png?raw=true";
+
+    }
+}
