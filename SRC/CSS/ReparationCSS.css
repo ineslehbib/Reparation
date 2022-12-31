@@ -86,3 +86,15 @@ button:hover {
         display: none;
     }
 }
+map {
+    cursor: pointer;
+}
+
+.selection {
+    cursor: pointer;
+    position: relative;
+    float: left;
+    padding: 5px;
+    border: #212529 solid 1px;
+    margin-right: 10px;
+}
