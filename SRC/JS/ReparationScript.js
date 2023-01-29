@@ -1,127 +1,82 @@
+
+console.log("ok:1" + Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/V3Final.png'));
+//console.log("ok:2" + Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/2-removebg-preview.png'));
+//console.log("ok:3" + Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/3-removebg-preview.png'));
+//console.log("ok:4" + Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/4-removebg-preview.png'));
+// function getBase64FromImageUrl(url) {
+//     var img = new Image();
+
+//     img.setAttribute('crossOrigin', 'anonymous');
+
+
+//     img.onload = function () {
+//         var canvas = document.createElement("canvas");
+//         canvas.width = this.width;
+//         canvas.height = this.height;
+
+//         var ctx = canvas.getContext("2d");
+//         ctx.drawImage(this, 0, 0);
+
+//         var dataURL = canvas.toDataURL("image/png");
+
+//         // alert(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+//     };
+
+//     img.src = url;
+// }
+// const getBase64FromUrl = async (url) => {
+//     const data = await fetch(url);
+//     const blob = await data.blob();
+//     return new Promise((resolve) => {
+//         const reader = new FileReader();
+//         reader.readAsDataURL(blob);
+//         reader.onloadend = () => {
+//             const base64data = reader.result;
+//             resolve(base64data);
+//         }
+//     });
+// }
+// const url1 = getBase64FromUrl('https://lh3.googleusercontent.com/i7cTyGnCwLIJhT1t2YpLW-zHt8ZKalgQiqfrYnZQl975-ygD_0mOXaYZMzekfKW_ydHRutDbNzeqpWoLkFR4Yx2Z2bgNj2XskKJrfw8');
+
+// const image1 = new Image();
+// (async function () {
+//     const response = await fetch(`https://placekitten.com/320/240`)
+//     const blob = await response.blob()
+//     const url = URL.createObjectURL(blob.slice(0, 4000));
+//     image1.src = url;
+//      //console.log(image1 + "ok ok ok ");
+// })
+// function toDataUrl(url, callback) {
+//     var xhr = new XMLHttpRequest();
+//     xhr.onload = function () {
+//         var reader = new FileReader();
+//         reader.onloadend = function () {
+//             callback(reader.result);
+//         }
+//         reader.readAsDataURL(xhr.response);
+//     };
+//     xhr.open('GET', url);
+//     xhr.responseType = 'blob';
+//     xhr.send();
+// }
+
+// toDataUrl('https://github.com/ineslehbib/Reparation/blob/master/4-removebg-preview.png?raw=true', function (url1) {
+//     console.log(url1); // myBase64 is the base64 string
+// });
 function Render(html) {
     HTMLContainer.innerHTML = "";
     HTMLContainer.insertAdjacentHTML('beforeend', html);
 }
-
+//Declaration des images
+//pic 1 
+window.onload = function () {
+    document.getElementById("picture1").src = "ok";
+}
+// var voiture = Document.getElementById("voiture");
+// var V3Final = new Image();
+// voiture.src = Microsoft.Dynamics.NAV.GetImageResource("SRC/assets/V3Final.png"); _
 // Highlight Current Page link in the Navbar
-document.addEventListener('DOMContentLoaded', () => {
-    const $navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'), 0);
-    const $withDropdown = Array.prototype.slice.call(document.querySelectorAll('.with-dropdown'), 0);
-    const navDropdown = document.getElementById('nav-dropdown');
-    // Highlight Current Page link in the Navbar
-    if ($navLinks.length > 0) {
-        $navLinks.forEach(el => {
-            if (window.location.pathname == el.getAttribute("href")) {
-                el.className += " current";
-            }
-        })
-    }
-    // End of Highlight Current Page link in the Navbar
 
-    if ($withDropdown.length > 0) {
-        $withDropdown.forEach(el => {
-            el.addEventListener('click', () => {
-                navDropdown.classList.toggle('is-active');
-            });
-        });
-    };
-});
-
-
-const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-
-
-
-// Add active class on another page linked
-// ==========================================
-// $(window).on('load',function () {
-//     var current = location.pathname;
-//     console.log(current);
-//     $('#navbarSupportedContent ul li a').each(function(){
-//         var $this = $(this);
-//         // if the current path is like this link, make it active
-//         if($this.attr('href').indexOf(current) !== -1){
-//             $this.parent().addClass('active');
-//             $this.parents('.menu-submenu').addClass('show-dropdown');
-//             $this.parents('.menu-submenu').parent().addClass('active');
-//         }else{
-//             $this.parent().removeClass('active');
-//         }
-//     })
-// });
-
-function ChangeFace(id) {
-    let text = id
-    var aff = document.getElementById(text);
-    var voi = document.getElementById('voiture');
-    if (text.indexOf("face") == 0) {
-        document.getElementById('voiture').src = "C:/Users/ILAHBIB/Documents/AL/Reparation/SRC/assets/face.png";
-        document.getElementById('voiture').useMap = "#marquerface";
-        console.log("ok");
-        reset();
-
-    }
-    if (text.indexOf("arriere") == 0) {
-        document.getElementById('voiture').src = "C:/Users/ILAHBIB/Documents/AL/Reparation/SRC/assets/arriere.png";
-        document.getElementById('voiture').useMap = "#marquerarriere";
-        reset();
-
-    }
-    if (text.indexOf("bas") == 0) {
-        document.getElementById('voiture').src = "C:/Users/ILAHBIB/Documents/AL/Reparation/SRC/assets/bas.png";
-        reset();
-    }
-    if (text.indexOf("gauche") == 0) {
-        document.getElementById('voiture').src = "C:/Users/ILAHBIB/Documents/AL/Reparation/SRC/assets/gauche.png";
-        reset();
-    }
-    if (text.indexOf("droite") == 0) {
-        document.getElementById('voiture').src = "C:/Users/ILAHBIB/Documents/AL/Reparation/SRC/assets/droite.png";
-        reset();
-    }
-
-    if (text.indexOf("haut") == 0) {
-        document.getElementById('voiture').src = "SRC/assets/haut.png";
-        reset();
-    }
-}
-function message() {
-    console.log('Retroviseur Gauche');
-    document.getElementById('zone').innerHTML = ZoneB()
-}
-function message1() {
-    console.log('Retroviseur Droite');
-    document.getElementById('zone').innerHTML = ZoneC()
-}
-function message2() {
-    console.log('ZoneA');
-    document.getElementById('zone').innerHTML = ZoneA()
-}
-function message3() {
-    console.log('ZoneCapo');
-    document.getElementById('zone').innerHTML = ZoneD()
-}
-function message4() {
-    console.log('feuGauche');
-    document.getElementById('zone').innerHTML = ZoneE()
-}
-function message5() {
-    console.log('feuDroite');
-    document.getElementById('zone').innerHTML = ZoneF()
-}
-function message6() {
-    console.log('Calandre');
-    document.getElementById('zone').innerHTML = ZoneG()
-}
-function message7() {
-    console.log('Calandre');
-    document.getElementById('zone').innerHTML = ZoneH()
-}
-function message8() {
-    console.log('Calandre');
-    document.getElementById('zone').innerHTML = ZoneI()
-}
 function notification(id) {
     alert('Succés : ' + id);
 }
@@ -132,6 +87,7 @@ function Vider() {
     output += '<div></div>';
     return output;
 }
+
 function reset() {
     document.getElementById('zone').innerHTML = Vider();
     //Effacer tout les marques rouges
@@ -141,67 +97,43 @@ function reset() {
         marque.remove();
     });
 }
-// La partie en face de la voiture  
-function ZoneA() {
-    var output = "";
-    output += '<div class ="selection" id="vitre" style="margin-left:150px " onClick="notification(id);">Pare-Brise</div > ';
-    output += '<div class ="selection" id="Essuie_glace" onClick="notification(id);">Essuie-glace</div > ';
-    output += '<div class ="selection" id="jointure" onClick="notification(id);">Jointure</div > ';
-    return output;
-}
-function ZoneB() {
-    var output = "";
-    output += '<div class ="selection" id="retroviseur_Gauche" style="margin-left:150px " onClick="notification(id);">Rétroviseur extérieur Gauche</div > ';
-    return output;
-}
-function ZoneC() {
-    var output = "";
-    output += '<div class ="selection" id="retroviseur_Droite" style="margin-left:150px " onClick="notification(id);">Retroviseur extérieur Droite</div > ';
-    return output;
-}
-function ZoneD() {
-    var output = "";
-    output += '<div class ="selection" id="Capot" style="margin-left:150px " onClick="notification(id);">Capot</div > ';
-    return output;
-}
-function ZoneE() {
-    var output = "";
-    output += '<div class ="selection" id="Phare_Gauche" style="margin-left:150px " onClick="notification(id);">Phare Gauche</div > ';
-    return output;
-}
-function ZoneF() {
-    var output = "";
-    output += '<div class ="selection" id="Pahre_Droite" style="margin-left:150px " onClick="notification(id);">Phare Droite</div > ';
-    return output;
-}
-function ZoneG() {
-    var output = "";
-    output += '<div class ="selection" id="Calendre" style="margin-left:150px " onClick="notification(id);">Calandre</div > ';
-    return output;
-}
-function ZoneH() {
-    var output = "";
-    output += '<div class ="selection" id="Roue_Avant_Gauche" style="margin-left:150px " onClick="notification(id);">Roue Avant Gauche</div > ';
-    output += '<div class ="selection" id="Enjoliveur_de_roue" style="margin-left:20px " onClick="notification(id);">Enjoliveur de roue</div > ';
 
-    return output;
+var f, r, e, c;
+function fissure() {
+    f = true;
+    r = e = c = false;
+    document.addEventListener('click', printMousePos);
 }
-function ZoneI() {
-    var output = "";
-    output += '<div class ="selection" id="Roue_Avant_Droite" style="margin-left:150px " onClick="notification(id);">Roue Avant Droite</div > ';
-    output += '<div class ="selection" id="Enjoliveur_de_roue" style="margin-left:20px " onClick="notification(id);">Enjoliveur de roue</div > ';
-
-    return output;
+function rayure() {
+    r = true;
+    f = e = c = false;
+    document.addEventListener('click', printMousePos);
+}
+function enfoncement() {
+    e = true;
+    f = r = c = false;
+    document.addEventListener('click', printMousePos);
+}
+function casse() {
+    c = true;
+    e = r = f = false;
+    document.addEventListener('click', printMousePos);
 }
 
-
-
-// Add hover to selected area
 function marquer(x_pos, y_pos) {
 
     let b = document.body;
     let newP = document.createElement('img');
-    newP.src = "https://freepngimg.com/thumb/red_cross_mark/117880-cross-mark-free-clipart-hd-thumb.png";
+    if (f) {
+        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/4-removebg-preview.png?raw=true";
+    } else if (r) {
+        //newP = img1;
+        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/1-removebg-preview.png?raw=true";
+    } else if (e) {
+        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/3-removebg-preview.png?raw=true";
+    } else if (c) {
+        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/2-removebg-preview.png?raw=true";
+    }
     newP.width = "20";
     newP.height = "20";
     newP.className = "mark";
@@ -209,7 +141,124 @@ function marquer(x_pos, y_pos) {
     newP.style.left = x_pos + 'px';
     newP.style.top = y_pos + 'px';
 
-    b.prepend(newP);
+    if (y_pos > 70) {
+        b.prepend(newP);
 
-    //Ajoute le texte créé comme dernier enfant de l'élément bod
+        newP.addEventListener("mousedown", (event) => {
+            event.target.remove();
+        });
+
+
+
+    }
+
+
 }
+
+function printMousePos(event) {
+    var cursorX;
+    var cursorY;
+    cursorX = event.clientX;
+    cursorY = event.clientY;
+    //console.log(cursorX);
+    marquer(cursorX, cursorY);
+}
+
+document.addEventListener("click", printMousePos);
+// les captures
+function takeshot() {
+    let div = document.getElementById('to_save');
+
+
+    // Use the html2canvas
+    // function to take a screenshot
+    // and append it
+    // to the output div
+    html2canvas(div).then(
+        function (canvas) {
+            document
+                .getElementById('output')
+                .appendChild(canvas);
+        })
+}
+var i
+// var shotit = function () {
+//     var imgBlob;
+//     var reader;
+//     var outurl;
+//     html2canvas(document.body, {
+//         useCORS: true,
+//         onrendered: function (canvas) {
+//             document.body.appendChild(canvas);
+//             leCanvas = document.getElementsByTagName("canvas")[0];
+//             // img = leCanvas.toDataURL("image/png") + '';
+//             img = leCanvas.toDataURL("image/png") + '';
+//             Microsoft.Dynamics.NAV.InvokeExtensibilityMethod('save', [leCanvas.toDataURL("image/png")]);
+//             console.log("image1:" + img);
+//             document.write('<img src="' + img + '"/>');
+//             leCanvas.toBlob(function (blob) {
+//                 saveAs(blob, "vehicule.png");
+//                 var imageBlob = blob;
+//                 outurl = URL.createObjectURL(blob);
+//                 //   //console.log("OMG" + outurl);
+//                 reader = new FileReader();
+
+//                 // This fires after the blob has been read/loaded.
+//                 reader.addEventListener('loadend', (e) => {
+//                     const text = e.srcElement.result;
+//                 });
+
+//                 // Start reading the blob as text.
+//                 reader.readAsText(blob);
+//                 // //console.log("reader : " + reader);
+//             });
+
+//             // //console.log(reader);
+//         },
+//         width: 600,
+//         height: 550
+//     });
+// }
+html2canvas(document.querySelector("#capture")).then(canvas => {
+    document.body.appendChild(canvas)
+});
+
+var shotit = function () {
+    var imgBlob;
+    var reader;
+    var outurl;
+    html2canvas(document.body, { allowTaint: true }, { useCORS: true }).then(canvas => {
+        document.body.appendChild(canvas);
+        var leCanvas = document.getElementsByTagName("canvas")[0];
+        // img = leCanvas.toDataURL("image/png") + '';
+
+
+        var img = leCanvas.toDataURL('image/png');
+
+        img.width = 500;
+        img.height = 550;
+        Microsoft.Dynamics.NAV.InvokeExtensibilityMethod('save', [leCanvas.toDataURL("image/png")]);
+        console.log("image1:" + img);
+        document.write('<img src="' + img + '" width="500" height="550"/>');
+        canvas.toBlob(function (blob) {
+            saveAs(blob, "vehicule.png");
+            var imageBlob = blob;
+            outurl = URL.createObjectURL(blob);
+            //   //console.log("OMG" + outurl);
+            reader = new FileReader();
+
+            // This fires after the blob has been read/loaded.
+            reader.addEventListener('loadend', (e) => {
+                const text = e.srcElement.result;
+            });
+
+            // Start reading the blob as text.
+            reader.readAsText(blob);
+            // //console.log("reader : " + reader);
+        });
+
+        // //console.log(reader);
+    });
+}
+
+// Charger la version local des images }

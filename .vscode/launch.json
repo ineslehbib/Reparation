@@ -10,6 +10,8 @@
     "logo": "",
     "application": "16.0.0.0",
     "configurations": [
+        
+
         {
             "name": "LOCAL INES",
             "type": "al",
@@ -27,6 +29,26 @@
             "breakOnNext": "WebServiceClient",
             "tenant": "default",
             "port": 14049,
+            "startupObjectType": "Page",
+            "schemaUpdateMode": "ForceSync"
+        },
+        {
+            "name": "Serveur DEV",
+            "type": "al",
+            "request": "launch",
+            "environmentType": "OnPrem",
+            "server": "http://192.168.1.197:8080/LEMOTEUR_DEV/",
+            "serverInstance": "Lemoteur_DEV",
+            "authentication": "Windows",
+            "breakOnError": true,
+            "breakOnRecordWrite": false,
+            "enableSqlInformationDebugger": true,
+            "enableLongRunningSqlStatements": true,
+            //"longRunningSqlStatementsThreshold": 500,
+            //"numberOfSqlStatements": 10,
+            //"breakOnNext": "WebServiceClient",
+            "tenant": "default",
+            "port": 1149,
             "startupObjectType": "Page",
             "schemaUpdateMode": "ForceSync"
         }

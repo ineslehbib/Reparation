@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "html2canvas-proxy": "^1.0.1"
+  }
+}
