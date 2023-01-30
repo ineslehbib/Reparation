@@ -2042,7 +2042,6 @@
                                         </Paragraph>
                                       </Paragraphs>
                                       <rd:DefaultName>Textbox908</rd:DefaultName>
-                                      <Top>0cm</Top>
                                       <Left>0.01892cm</Left>
                                       <Height>1.64747cm</Height>
                                       <Width>7.57007cm</Width>
@@ -2343,7 +2342,7 @@
             </ReportItems>
             <Top>18.94632cm</Top>
             <Left>0.33757cm</Left>
-            <Height>2.99318cm</Height>
+            <Height>2.99319cm</Height>
             <Width>19.38412cm</Width>
             <ZIndex>12</ZIndex>
             <Style>
@@ -3234,8 +3233,82 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Tablix Name="Tablix12">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>6.62848in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>3.94413in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle14">
+                          <ReportItems>
+                            <Image Name="Image8">
+                              <Source>Database</Source>
+                              <Value>=Fields!Image.Value</Value>
+                              <MIMEType>image/jpeg</MIMEType>
+                              <Sizing>FitProportional</Sizing>
+                              <Left>3.21108cm</Left>
+                              <Height>3.94413in</Height>
+                              <Width>4.4565in</Width>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Image>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details5" />
+                  <Visibility>
+                    <Hidden>=Fields!PIC_Filter.Value &lt;&gt; "True"</Hidden>
+                  </Visibility>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <KeepTogether>true</KeepTogether>
+            <DataSetName>DataSet_Result</DataSetName>
+            <Top>22.1159cm</Top>
+            <Left>1.36853cm</Left>
+            <Height>3.94413in</Height>
+            <Width>6.62848in</Width>
+            <ZIndex>22</ZIndex>
+            <Visibility>
+              <Hidden>=Not Last(Fields!Setup_PrintPictures.Value, "DataSet_Result")</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
         </ReportItems>
-        <Height>22.01006cm</Height>
+        <Height>32.43148cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3272,7 +3345,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>2.32833cm</Height>
+          <Height>2.24895cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3282,7 +3355,7 @@
               <MIMEType>image/jpeg</MIMEType>
               <Sizing>Fit</Sizing>
               <Top>0.06944in</Top>
-              <Left>0.15529in</Left>
+              <Left>0.1355in</Left>
               <Height>1.88303cm</Height>
               <Width>19.2884cm</Width>
               <Style>
@@ -3851,8 +3924,8 @@ End Function
         <Field Name="afficherPiedsPage">
           <DataField>afficherPiedsPage</DataField>
         </Field>
-        <Field Name="picture">
-          <DataField>picture</DataField>
+        <Field Name="Picture1">
+          <DataField>Picture1</DataField>
         </Field>
         <Field Name="pictureno">
           <DataField>pictureno</DataField>
@@ -3950,8 +4023,14 @@ End Function
         <Field Name="CustomerSignatureCaption">
           <DataField>CustomerSignatureCaption</DataField>
         </Field>
-        <Field Name="id">
-          <DataField>id</DataField>
+        <Field Name="ReportForNavId_1000000028">
+          <DataField>ReportForNavId_1000000028</DataField>
+        </Field>
+        <Field Name="Image">
+          <DataField>Image</DataField>
+        </Field>
+        <Field Name="PIC_Filter">
+          <DataField>PIC_Filter</DataField>
         </Field>
         <Field Name="ReportForNavId_1000000022">
           <DataField>ReportForNavId_1000000022</DataField>
@@ -3982,9 +4061,6 @@ End Function
         </Field>
         <Field Name="picture2">
           <DataField>picture2</DataField>
-        </Field>
-        <Field Name="PIC_Filter">
-          <DataField>PIC_Filter</DataField>
         </Field>
       </Fields>
       <Query>

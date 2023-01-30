@@ -411,11 +411,11 @@ Report 50111 "Print Checklist Dynamique"//25006028
             column(afficherPiedsPage; afficherPiedsPage)
             {
             }
-            column(picture; Picture.Blob)
+            column(Picture1; Picture1.Blob)
             {
 
             }
-            column(pictureno; Picture."No.")
+            column(pictureno; Picture1."No.")
             {
 
             }
@@ -437,12 +437,12 @@ Report 50111 "Print Checklist Dynamique"//25006028
                 ProcessChecklistHeader.SetRange("Source TYPE", database::"Service Header EDMS");
                 ProcessChecklistHeader.SetRange("Source Subtype", 1);
                 If ProcessChecklistHeader.FindFirst() then begin
-                    Picture.Reset();
-                    Picture.SetRange("Source ID", ProcessChecklistHeader."No.");
-                    Picture.SetRange("Source TYPE", database::"Process Checklist Header");
-                    Picture.SetRange("Vehicle Check List ", True);
-                    If Picture.FindFirst() then
-                        Picture.CalcFields(Blob);
+                    // Picture.Reset();
+                    // Picture.SetRange("Source ID", ProcessChecklistHeader."No.");
+                    // Picture.SetRange("Source TYPE", database::"Process Checklist Header");
+                    // Picture.SetRange("Vehicle Check List ", True);
+                    // If Picture.FindFirst() then
+                    //     Picture.CalcFields(Blob);
                 end;
 
 
@@ -503,9 +503,7 @@ Report 50111 "Print Checklist Dynamique"//25006028
         }
         dataitem(ChecklistHeader; "Process Checklist Header")
         {
-            RequestFilterFields = "No.";
             UseTemporary = true;
-
             column(Observations;
             ChecklistHeader.Observations)
             {
@@ -568,36 +566,24 @@ Report 50111 "Print Checklist Dynamique"//25006028
             column(CustomerSignatureCaption; CustomerSignatureLbl)
             {
             }
-            column(id; checklistheader."Source ID")
+            // column(id; checklistheader."Source ID")
+            // {
+            // }
+            dataitem(Picture; Picture)
             {
+                DataItemLink = "Source ID" = field("No.");
+                DataItemTableView = where("Source Type" = const(25006025), "Source Subtype" = const("1"), "Source Ref. No." = const(0));
+                column(ReportForNavId_1000000028; 1000000028)
+                {
+                }
+                column(Image; Picture.Blob)
+                {
+                }
+                column(PIC_Filter; 'True')
+                {
+                }
             }
-
-            trigger OnAfterGetRecord()
-            begin
-                // IF ServiceHeaderEDMS1."Service Advisor" <> '' THEN BEGIN
-                //     IF SalespersonPurchaser.GET(ServiceHeaderEDMS1."Service Advisor") THEN
-                //         NomReceptionnaire := SalespersonPurchaser.Name;
-                // END;
-                // IF Vehicle.GET("Vehicle Serial No.") THEN;
-                // IF Customer.GET("Sell-to Customer No.") THEN;
-
-                // //read blob
-                // // CALCFIELDS("Work Description");
-                // // "Work Description".CREATEINSTREAM(CommentStream);
-                // CommentStream.READTEXT(CommentText);
-                // LWorkDescription := ServiceHeaderEDMS1.GetWorkDescription;
-
-            end;
-
-            trigger OnPreDataItem()
-            begin
-
-            end;
-
-
-
         }
-
         dataitem(CompanyInformation; "Company Information")
         {
             CalcFields = Picture, "Invoice Header Picture", "Invoice Footer Picture", "Invoice Disclaimer Picture";
@@ -633,9 +619,7 @@ Report 50111 "Print Checklist Dynamique"//25006028
 
             }
 
-            column(PIC_Filter; 'True')
-            {
-            }
+
 
             trigger OnAfterGetRecord()
             begin
@@ -658,6 +642,7 @@ Report 50111 "Print Checklist Dynamique"//25006028
 
 
     }
+
 
     requestpage
     {
@@ -719,7 +704,7 @@ Report 50111 "Print Checklist Dynamique"//25006028
         [InDataSet]
         UseCustomerLanguage: Boolean;
         lCustomer: Record 18;
-        Picture: Record Picture;
+        Picture1: Record Picture;
         DisplayLanguage: Code[10];
         CaptionCheck1: Label 'Repeat Visit';
         CaptionCheck2: Label 'While you Wait';
@@ -828,7 +813,7 @@ Report 50111 "Print Checklist Dynamique"//25006028
     [Scope('OnPrem')]
     procedure SetCheckListHeader(ProcessChecklistHeaderToSet: Record "Process Checklist Header")
     begin
-
+        ChecklistHeader.DeleteAll;
         ChecklistHeader.Init;
         ProcessChecklistHeaderToSet.CalcFields("Employee Signature Image", "Customer Signature Image");
         ChecklistHeader := ProcessChecklistHeaderToSet;

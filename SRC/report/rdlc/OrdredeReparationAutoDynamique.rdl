@@ -3066,8 +3066,8 @@ yjCbHpZ8dr93U+ngsXcEvCbGU/TH4+yrw2x6WJJ4b/cu3rnRh9FqTDrcKbr09q4kJ+24yoYq9h4ljeAU
         <Field Name="afficherPiedsPage">
           <DataField>afficherPiedsPage</DataField>
         </Field>
-        <Field Name="picture">
-          <DataField>picture</DataField>
+        <Field Name="picture1">
+          <DataField>picture1</DataField>
         </Field>
         <Field Name="pictureno">
           <DataField>pictureno</DataField>

@@ -9,7 +9,6 @@ report 50110 "DLT Ordre Dynamique"
 
     dataset
     {
-
         dataitem("Service Header EDMS"; "Service Header EDMS")
         {
             RequestFilterFields = "No.";
@@ -416,11 +415,11 @@ report 50110 "DLT Ordre Dynamique"
             column(afficherPiedsPage; afficherPiedsPage)
             {
             }
-            column(picture; Picture.Blob)
+            column(picture1; Picture1.Blob)
             {
 
             }
-            column(pictureno; Picture."No.")
+            column(pictureno; Picture1."No.")
             {
 
             }
@@ -444,11 +443,11 @@ report 50110 "DLT Ordre Dynamique"
                 ProcessChecklistHeader.SetRange("Source TYPE", database::"Service Header EDMS");
                 ProcessChecklistHeader.SetRange("Source Subtype", 1);
                 If ProcessChecklistHeader.FindFirst() then begin
-                    Picture.Reset();
-                    Picture.SetRange("Source ID", ProcessChecklistHeader."No.");
-                    Picture.SetRange("Source TYPE", database::"Process Checklist Header");
-                    If Picture.FindFirst() then
-                        Picture.CalcFields(Blob);
+                    Picture1.Reset();
+                    Picture1.SetRange("Source ID", ProcessChecklistHeader."No.");
+                    Picture1.SetRange("Source TYPE", database::"Process Checklist Header");
+                    If Picture1.FindFirst() then
+                        Picture1.CalcFields(Blob);
                 end;
 
 
@@ -517,7 +516,7 @@ report 50110 "DLT Ordre Dynamique"
         [InDataSet]
         UseCustomerLanguage: Boolean;
         lCustomer: Record 18;
-        Picture: Record Picture;
+        Picture1: Record Picture;
         DisplayLanguage: Code[10];
         CaptionCheck1: Label 'Repeat Visit';
         CaptionCheck2: Label 'While you Wait';

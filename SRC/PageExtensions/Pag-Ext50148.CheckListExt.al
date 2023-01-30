@@ -3,6 +3,38 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
 
     layout
     {
+
+
+
+        addafter(ConfirmedbyAdvisor)
+        {
+            field(Fuel; ServiceHeader."DLT Fuel")
+            {
+
+            }
+            field(kilometrage; ServiceHeader."Variable Field Run 1")
+            {
+            }
+            group(WorkDescription)
+            {
+                Caption = 'Description du travail';
+                field(Control25006019; WorkDescription)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Importance = Standard;
+                    MultiLine = true;
+                    ShowCaption = false;
+                    ToolTip = 'Specifies the products or service being onfered';
+
+                    trigger OnValidate()
+                    begin
+                        ServiceHeader.SetWorkDescription(WorkDescription);
+                    end;
+                }
+            }
+
+        }
+
         addbefore(Details)
         {
             field(Observations; Rec.Observations)
@@ -176,10 +208,19 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
     var
         myInt: Integer;
     begin
+        ServiceHeader.InitRecord();
+        ServiceHeader.SetRange("No.", rec."Source ID");
+        if (ServiceHeader.FindFirst()) then;
+        WorkDescription := ServiceHeader.GetWorkDescription;
         if Camera.IsAvailable then begin
             Camera := Camera.Create;
             CameraAvailable := true;
         end;
+    end;
+
+    trigger OnClosePage()
+    begin
+        ServiceHeader.Modify();
     end;
 
     local procedure GetTimeStampForFileName(): Text
@@ -416,7 +457,13 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
         exit(UploadResult);
     end;
 
+
+
+
+
     var
+        WorkDescription: Text;
+        ServiceHeader: Record "Service Header EDMS";
         GHCheckListAddInManagement: Codeunit "Checklist AddIn Management";
 
         Text007: label 'Import';
