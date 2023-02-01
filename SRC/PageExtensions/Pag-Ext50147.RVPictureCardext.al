@@ -9,7 +9,7 @@ pageextension 50147 "RV Picture Card ext" extends "Picture Card"
         }
         addafter(General)
         {
-            group("Rapport d'état de véhicule")
+            group("Picture")
             {
 
                 usercontrol(PictureCard; "PictureCard Html")

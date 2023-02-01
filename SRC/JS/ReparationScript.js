@@ -125,14 +125,14 @@ function marquer(x_pos, y_pos) {
     let b = document.body;
     let newP = document.createElement('img');
     if (f) {
-        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/4-removebg-preview.png?raw=true";
+        newP.src = Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/4-removebg-preview.png');
     } else if (r) {
         //newP = img1;
-        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/1-removebg-preview.png?raw=true";
+        newP.src = Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/1-removebg-preview.png');
     } else if (e) {
-        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/3-removebg-preview.png?raw=true";
+        newP.src = Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/3-removebg-preview.png');
     } else if (c) {
-        newP.src = "https://github.com/ineslehbib/Reparation/blob/master/2-removebg-preview.png?raw=true";
+        newP.src = Microsoft.Dynamics.NAV.GetImageResource('SRC/Images/2-removebg-preview.png');
     }
     newP.width = "20";
     newP.height = "20";
@@ -227,21 +227,19 @@ var shotit = function () {
     var imgBlob;
     var reader;
     var outurl;
-    html2canvas(document.body, { allowTaint: true }, { useCORS: true }).then(canvas => {
+    html2canvas(document.body, { allowTaint: true, useCORS: true }).then(canvas => {
         document.body.appendChild(canvas);
         var leCanvas = document.getElementsByTagName("canvas")[0];
         // img = leCanvas.toDataURL("image/png") + '';
-
-
         var img = leCanvas.toDataURL('image/png');
 
-        img.width = 500;
+        img.width = 550;
         img.height = 550;
         Microsoft.Dynamics.NAV.InvokeExtensibilityMethod('save', [leCanvas.toDataURL("image/png")]);
         console.log("image1:" + img);
-        document.write('<img src="' + img + '" width="500" height="550"/>');
+        document.write('<img src="' + img + '" width="550" height="550"/>');
         canvas.toBlob(function (blob) {
-            saveAs(blob, "vehicule.png");
+            //saveAs(blob, "vehicule.png");
             var imageBlob = blob;
             outurl = URL.createObjectURL(blob);
             //   //console.log("OMG" + outurl);
@@ -256,9 +254,7 @@ var shotit = function () {
             reader.readAsText(blob);
             // //console.log("reader : " + reader);
         });
-
-        // //console.log(reader);
     });
 }
 
-// Charger la version local des images }
+

@@ -503,6 +503,7 @@ Report 50111 "Print Checklist Dynamique"//25006028
         }
         dataitem(ChecklistHeader; "Process Checklist Header")
         {
+            RequestFilterFields = "No.";
             UseTemporary = true;
             column(Observations;
             ChecklistHeader.Observations)
@@ -572,7 +573,8 @@ Report 50111 "Print Checklist Dynamique"//25006028
             dataitem(Picture; Picture)
             {
                 DataItemLink = "Source ID" = field("No.");
-                DataItemTableView = where("Source Type" = const(25006025), "Source Subtype" = const("1"), "Source Ref. No." = const(0));
+                DataItemTableView = where("Source Type" = const(25006025), "Vehicle Check List " = const(false));
+                // "Vehicle Check List " = const(false)
                 column(ReportForNavId_1000000028; 1000000028)
                 {
                 }

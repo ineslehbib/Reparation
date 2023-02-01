@@ -10,10 +10,20 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
         {
             field(Fuel; ServiceHeader."DLT Fuel")
             {
-
+                Caption = 'Carburant';
+                trigger OnValidate()
+                begin
+                    ServiceHeader.Modify()
+                end;
             }
+
             field(kilometrage; ServiceHeader."Variable Field Run 1")
             {
+
+                trigger OnValidate()
+                begin
+                    ServiceHeader.Modify()
+                end;
             }
             group(WorkDescription)
             {
@@ -28,7 +38,9 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
 
                     trigger OnValidate()
                     begin
+
                         ServiceHeader.SetWorkDescription(WorkDescription);
+                        ServiceHeader.Modify()
                     end;
                 }
             }
@@ -72,12 +84,13 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
                         Picture.SetRange("Source ID", rec."No.");
                         Picture.SetRange("Source TYPE", database::"Process Checklist Header");
                         Picture.SetRange("Vehicle Check List ", true);
+
                         Picture.DeleteAll();
 
                         Picture.Init();
                         Picture.Reset();
 
-                        CamerMgt.CreatePictureBySource('descr', '', 25006025, rec."Source Subtype", rec."No.", 0, rec."Vehicle Serial No.", Picture);
+                        CamerMgt.CreatePictureBySource('descr', '', 25006025, rec."Source Subtype", rec."No.", 1, rec."Vehicle Serial No.", Picture);
                         Picture."Vehicle Check List " := true;
                         rec.Modify();
                         BLOBImport(Picture, '', image);
@@ -118,12 +131,25 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
                 var
                     PrintCheckList: Report "Print Checklist Dynamique";
                     GHCheckListBuffer: Record "Checklist Buffer" temporary;
+                    ServiceHeaderEDMS: Record "Service Header EDMS";
                 begin
-                    GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
+GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
                     PrintCheckList.FillItemCheckList(GHCheckListBuffer);
                     PrintCheckList.SetCheckListHeader(Rec);
+
+                    // If (ServiceHeaderEDMS.get(ServiceHeaderEDMS."Document Type"::Order, rec."Source ID")) then begin
+
+                    ServiceHeaderEDMS.Init();
+                    ServiceHeaderEDMS.SetRange("No.", rec."Source ID");
+                    ServiceHeaderEDMS.SetRange("Document Type", 1);
+
+
+
+
+                    PrintCheckList.SetTableView(ServiceHeaderEDMS);
                     PrintCheckList.Run;
                 end;
+
             }
 
             action("Prendre photo")
@@ -145,21 +171,6 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
                 end;
             }
 
-            action("Test photo")
-            {
-                ApplicationArea = Basic;
-                Image = Camera;
-                Promoted = true;
-                PromotedCategory = New;
-                PromotedIsBig = true;
-
-                trigger OnAction()
-                var
-                    TestCamera: Page "TestCamera";
-                begin
-                    TestCamera.run();
-                end;
-            }
 
 
         }
@@ -212,16 +223,22 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
         ServiceHeader.SetRange("No.", rec."Source ID");
         if (ServiceHeader.FindFirst()) then;
         WorkDescription := ServiceHeader.GetWorkDescription;
+        ServiceHeader.Modify();
         if Camera.IsAvailable then begin
             Camera := Camera.Create;
             CameraAvailable := true;
         end;
     end;
 
+
+
     trigger OnClosePage()
     begin
         ServiceHeader.Modify();
+
     end;
+
+
 
     local procedure GetTimeStampForFileName(): Text
     begin
@@ -339,8 +356,100 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
     procedure Html(): Text
     var
         out: Text;
-    begin
+        CamerMgt: Codeunit "Camera Mgt";
+        ServiceMgt: Record "Service Mgt. Setup EDMS";
+        OutStr: OutStream;
+        InStr: InStream;
+        html: Text;
+        final: Text;
+        TempBlob: Record TempBlob temporary;
+        ProcessChecklistSetup: Record "Process Checklist Setup";
+        //Le bouton terminer
+        OutStr1: OutStream;
+        InStr1: InStream;
 
+        terminer: Text;
+        TempBlob1: Record TempBlob temporary;
+        //Le bouton Supprimer
+        OutStr2: OutStream;
+        InStr2: InStream;
+
+        supprimer: Text;
+        TempBlob2: Record TempBlob temporary;
+        //Le bouton enfoncement
+        OutStr3: OutStream;
+        InStr3: InStream;
+
+        Enfoncement: Text;
+        TempBlob3: Record TempBlob temporary;
+        //Le bouton rayure
+        OutStr4: OutStream;
+        InStr4: InStream;
+
+        rayure: Text;
+        TempBlob4: Record TempBlob temporary;
+        //Le bouton Fissure
+        OutStr5: OutStream;
+        InStr5: InStream;
+
+        fissure: Text;
+        TempBlob5: Record TempBlob temporary;
+        //Le Bouton Casse
+        OutStr6: OutStream;
+        InStr6: InStream;
+
+        casse: Text;
+        TempBlob6: Record TempBlob temporary;
+
+    begin
+        If ServiceMgt.FindFirst() then
+            ServiceMgt.CalcFields("DLT Picture PDI");
+        ClearLastError;
+
+        ServiceMgt."DLT Picture PDI".CreateOutstream(OutStr);
+        ServiceMgt."DLT Picture PDI".CreateInStream(InStr);
+        TempBlob.Blob := ServiceMgt."DLT Picture PDI";
+        final := TempBlob.ToBase64String();
+
+        If ProcessChecklistSetup.FindFirst() then
+            ProcessChecklistSetup.CalcFields("Bouton Casse");
+        ProcessChecklistSetup.CalcFields("Bouton Enfoncement");
+        ProcessChecklistSetup.CalcFields("Bouton Fissure");
+        ProcessChecklistSetup.CalcFields("Bouton Rayure");
+        ProcessChecklistSetup.CalcFields("Bouton supprimer");
+        ProcessChecklistSetup.CalcFields("Bouton Terminer");
+        ClearLastError;
+
+        ProcessChecklistSetup."Bouton Terminer".CreateOutstream(OutStr1);
+        ProcessChecklistSetup."Bouton Terminer".CreateInStream(InStr1);
+        TempBlob1.Blob := ProcessChecklistSetup."Bouton Terminer";
+        terminer := TempBlob1.ToBase64String();
+
+        ProcessChecklistSetup."Bouton Supprimer".CreateOutstream(OutStr2);
+        ProcessChecklistSetup."Bouton Supprimer".CreateInStream(InStr2);
+        TempBlob2.Blob := ProcessChecklistSetup."Bouton Supprimer";
+        supprimer := TempBlob2.ToBase64String();
+
+        ProcessChecklistSetup."Bouton Enfoncement".CreateOutstream(OutStr3);
+        ProcessChecklistSetup."Bouton Enfoncement".CreateInStream(InStr3);
+        TempBlob3.Blob := ProcessChecklistSetup."Bouton Enfoncement";
+        Enfoncement := TempBlob3.ToBase64String();
+
+        ProcessChecklistSetup."Bouton Rayure".CreateOutstream(OutStr4);
+        ProcessChecklistSetup."Bouton Rayure".CreateInStream(InStr4);
+        TempBlob4.Blob := ProcessChecklistSetup."Bouton Rayure";
+        rayure := TempBlob4.ToBase64String();
+
+        ProcessChecklistSetup."Bouton Fissure".CreateOutstream(OutStr5);
+        ProcessChecklistSetup."Bouton Fissure".CreateInStream(InStr5);
+        TempBlob5.Blob := ProcessChecklistSetup."Bouton Fissure";
+        fissure := TempBlob5.ToBase64String();
+
+
+        ProcessChecklistSetup."Bouton Casse".CreateOutstream(OutStr6);
+        ProcessChecklistSetup."Bouton Casse".CreateInStream(InStr6);
+        TempBlob6.Blob := ProcessChecklistSetup."Bouton Casse";
+        casse := TempBlob6.ToBase64String();
         out := '<!DOCTYPE html>   ';
         out += '<html lang="en">    ';
         out += '<head>    ';
@@ -353,19 +462,19 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
         out += '<center><table> ';
         out += '<tr> ';
         out += '<td> ';
-
         out += '  ';
-        out += '<button  onClick="reset();" style="cursor:pointor;" class="button-19"><img  height="40" width="30" src="http://www.clker.com/cliparts/4/7/F/F/w/I/trash-red.svg.hi.png" > </button>';
-        out += '<button id="fissure" onClick="fissure();" style="margin-left: 10px !important;width:80px;display:inline-block;" class="button-19"class="button-19">Fissure<br><img height="20" width="20" id="picture1" src="https://github.com/ineslehbib/Reparation/blob/master/4-removebg-preview.png?raw=true"> </button>';
-        out += '<button id="rayure" onClick="rayure();" style="margin-left: 10px !important;width:80px;display:inline-block;" onClick=""  class="button-19">Rayure<br><img  height="20" width="20" src="https://github.com/ineslehbib/Reparation/blob/master/1-removebg-preview.png?raw=true" > </button> ';
-        out += '<button id="rayure"onClick="enfoncement();" style="margin-left: 10px !important;width:100px;display:inline-block;" onClick=""  class="button-19">Enfoncement <br><img  height="20" width="20" src="https://github.com/ineslehbib/Reparation/blob/master/3-removebg-preview.png?raw=true" > </button> ';
-        out += '<button id="rayure" onClick="casse();" style="margin-left: 10px !important;width:80px;display:inline-block;" onClick=""  class="button-19">Casse<br><img  height="20" width="20" src="https://github.com/ineslehbib/Reparation/blob/master/2-removebg-preview.png?raw=true" > </button>';
-        out += '<button  onClick="shotit();" style="cursor:pointor;margin-left: 10px !important;" class="button-19"><img  height="40" width="30" src="http://assets.stickpng.com/thumbs/5aa78e267603fc558cffbf1a.png" > </button>';
+        out += '<button  onClick="reset();" style="cursor:pointor;" class="button-19"><img  height="40" width="30"  src="data:image/png;base64,' + supprimer + '" > </button>';
+        out += '<button id="fissure" onClick="fissure();" style="margin-left: 10px !important;width:80px;display:inline-block;" class="button-19"class="button-19">Fissure<br><img height="20" width="20" id="picture1"  src="data:image/png;base64,' + fissure + '"> </button>';
+        out += '<button id="rayure" onClick="rayure();" style="margin-left: 10px !important;width:80px;display:inline-block;" onClick=""  class="button-19">Rayure<br><img  height="20" width="20"  src="data:image/png;base64,' + rayure + '" > </button> ';
+        out += '<button id="rayure"onClick="enfoncement();" style="margin-left: 10px !important;width:100px;display:inline-block;" onClick=""  class="button-19">Enfoncement <br><img  height="20" width="20"  src="data:image/png;base64,' + Enfoncement + '" > </button> ';
+        out += '<button id="rayure" onClick="casse();" style="margin-left: 10px !important;width:80px;display:inline-block;" onClick=""  class="button-19">Casse<br><img  height="20" width="20"  src="data:image/png;base64,' + casse + '" > </button>';
+        out += '<button  onClick="shotit();" style="cursor:pointor;margin-left: 10px !important;" class="button-19"><img  height="40" width="30" src="data:image/png;base64,' + terminer + '" > </button>';
         out += '';
         out += '</td> </tr><tr>';
         out += '<td> ';
         out += '<div style="text-align:center;margin-top:5px;float: center;" class="image-map-container" >   ';
-        out += '<img  height="500" width="350"  src="https://github.com/ineslehbib/Reparation/blob/master/V3Final.png?raw=true" id="voiture" >';
+        //out += '<img  height="500" width="350"  src="https://github.com/ineslehbib/Reparation/blob/master/V3Final.png?raw=true" id="voiture" >';
+        out += '<img  height="500" width="350"  src="data:image/png;base64,' + final + '" id="voiture" >';
         out += '</div>  ';
         out += '  ';
         out += '</td> </tr>';
@@ -379,7 +488,6 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
         out += '</td> ';
         out += '</tr> ';
         out += '</table> </center>';
-
         out += '</body>    ';
         out += '</html>    ';
         exit(out);
