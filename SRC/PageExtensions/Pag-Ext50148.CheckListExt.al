@@ -3,47 +3,36 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
 
     layout
     {
-
-
-
         addafter(ConfirmedbyAdvisor)
         {
-            field(Fuel; ServiceHeader."DLT Fuel")
+            field(Carburant; Rec.Fuel)
             {
                 Caption = 'Carburant';
-                trigger OnValidate()
-                begin
-                    ServiceHeader.Modify()
-                end;
+
             }
 
-            field(kilometrage; ServiceHeader."Variable Field Run 1")
+            field(kilometrage; Rec.Kilometrage)
             {
-
-                trigger OnValidate()
-                begin
-                    ServiceHeader.Modify()
-                end;
             }
-            group(WorkDescription)
+
+            group("Description du Travail")
             {
-                Caption = 'Description du travail';
-                field(Control25006019; WorkDescription)
+                caption = 'Description du travail';
+                field(DescriptionDuTravail; WorkDescription)
                 {
-                    ApplicationArea = Basic, Suite;
+                    ApplicationArea = ALL;
                     Importance = Standard;
                     MultiLine = true;
                     ShowCaption = false;
                     ToolTip = 'Specifies the products or service being onfered';
-
                     trigger OnValidate()
                     begin
-
-                        ServiceHeader.SetWorkDescription(WorkDescription);
-                        ServiceHeader.Modify()
+                        rec.SetWorkDescription(WorkDescription);
                     end;
                 }
-            }
+
+}
+
 
         }
 
@@ -133,7 +122,7 @@ pageextension 50148 "CheckListExt" extends "Checklist Card"  //25006104
                     GHCheckListBuffer: Record "Checklist Buffer" temporary;
                     ServiceHeaderEDMS: Record "Service Header EDMS";
                 begin
-GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
+                    GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
                     PrintCheckList.FillItemCheckList(GHCheckListBuffer);
                     PrintCheckList.SetCheckListHeader(Rec);
 
@@ -142,10 +131,6 @@ GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
                     ServiceHeaderEDMS.Init();
                     ServiceHeaderEDMS.SetRange("No.", rec."Source ID");
                     ServiceHeaderEDMS.SetRange("Document Type", 1);
-
-
-
-
                     PrintCheckList.SetTableView(ServiceHeaderEDMS);
                     PrintCheckList.Run;
                 end;
@@ -219,11 +204,7 @@ GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
     var
         myInt: Integer;
     begin
-        ServiceHeader.InitRecord();
-        ServiceHeader.SetRange("No.", rec."Source ID");
-        if (ServiceHeader.FindFirst()) then;
-        WorkDescription := ServiceHeader.GetWorkDescription;
-        ServiceHeader.Modify();
+
         if Camera.IsAvailable then begin
             Camera := Camera.Create;
             CameraAvailable := true;
@@ -234,7 +215,7 @@ GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
 
     trigger OnClosePage()
     begin
-        ServiceHeader.Modify();
+
 
     end;
 
@@ -338,6 +319,7 @@ GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
         PrintChecklist: Report "Print Checklist Dynamique";
         GHCheckListBuffer: Record "Checklist Buffer" temporary;
         GHCheckListAddInManagement: Codeunit "Checklist AddIn Management";
+        ServiceHeaderEDMS: Record "Service Header EDMS";
     begin
         ServerAttachmentFilePath := FileManagement.ServerTempFileName('pdf');
         //REPORT.SAVEASPDF(ReportId,ServerAttachmentFilePath,ChecklistHeader);
@@ -345,6 +327,15 @@ GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
         GHCheckListAddInManagement.FillCheckList(ChecklistHeader, GHCheckListBuffer);
         PrintChecklist.FillItemCheckList(GHCheckListBuffer);
         PrintChecklist.SetCheckListHeader(ChecklistHeader);
+
+        ServiceHeaderEDMS.Init();
+        ServiceHeaderEDMS.SetRange("No.", rec."Source ID");
+        ServiceHeaderEDMS.SetRange("Document Type", 1);
+
+
+
+
+        PrintCheckList.SetTableView(ServiceHeaderEDMS);
         PrintChecklist.SaveAsPdf(ServerAttachmentFilePath);
 
         if not Exists(ServerAttachmentFilePath) then
@@ -565,7 +556,15 @@ GHCheckListAddInManagement.FillCheckList(Rec, GHCheckListBuffer);
         exit(UploadResult);
     end;
 
+    trigger OnAfterGetRecord()
+    begin
+        WorkDescription := rec.GetWorkDescription();
+    end;
 
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        CurrPage.Update(false);
+    end;
 
 
 
